@@ -1,0 +1,159 @@
+{
+  "maps": [
+    {
+      "id": 68,
+      "lost": false,
+      "triangles": 268690,
+      "calls": 4
+    },
+    {
+      "id": 69,
+      "lost": false,
+      "triangles": 193723,
+      "calls": 2
+    },
+    {
+      "id": 70,
+      "lost": false,
+      "triangles": 57823,
+      "calls": 2
+    },
+    {
+      "id": 71,
+      "lost": false,
+      "triangles": 62908,
+      "calls": 2
+    },
+    {
+      "id": 72,
+      "lost": false,
+      "triangles": 62342,
+      "calls": 2
+    },
+    {
+      "id": 73,
+      "lost": false,
+      "triangles": 62481,
+      "calls": 2
+    },
+    {
+      "id": 74,
+      "lost": false,
+      "triangles": 57425,
+      "calls": 2
+    },
+    {
+      "id": 75,
+      "lost": false,
+      "triangles": 66442,
+      "calls": 2
+    },
+    {
+      "id": 76,
+      "lost": false,
+      "triangles": 65434,
+      "calls": 2
+    },
+    {
+      "id": 77,
+      "lost": false,
+      "triangles": 95166,
+      "calls": 2
+    },
+    {
+      "id": 199312,
+      "lost": false,
+      "triangles": 134556,
+      "calls": 4
+    },
+    {
+      "id": 199313,
+      "lost": false,
+      "triangles": 157517,
+      "calls": 4
+    },
+    {
+      "id": 199314,
+      "lost": false,
+      "triangles": 75204,
+      "calls": 1
+    },
+    {
+      "id": 199315,
+      "lost": false,
+      "triangles": 52964,
+      "calls": 1
+    },
+    {
+      "id": 199538,
+      "lost": false,
+      "triangles": 225361,
+      "calls": 4
+    },
+    {
+      "id": 199539,
+      "lost": false,
+      "triangles": 200870,
+      "calls": 4
+    },
+    {
+      "id": 199540,
+      "lost": false,
+      "triangles": 64453,
+      "calls": 2
+    }
+  ],
+  "banks": [
+    {
+      "id": 30,
+      "options": 133
+    },
+    {
+      "id": 31,
+      "options": 80
+    },
+    {
+      "id": 32,
+      "options": 157
+    },
+    {
+      "id": 199308,
+      "options": 100
+    },
+    {
+      "id": 199309,
+      "options": 96
+    },
+    {
+      "id": 199310,
+      "options": 143
+    },
+    {
+      "id": 199311,
+      "options": 46
+    },
+    {
+      "id": 199510,
+      "options": 129
+    },
+    {
+      "id": 199511,
+      "options": 96
+    },
+    {
+      "id": 199512,
+      "options": 151
+    }
+  ],
+  "horizontalPan": true,
+  "gateMotion": true,
+  "alternateState": true,
+  "fountainMotion": true,
+  "mobileLayouts": true,
+  "mobileNavigation": true,
+  "date": "2026-10-06",
+  "environment": "Headless Chromium with software WebGL; desktop 1440\u00d71000 and mobile viewport 390\u00d7844. Mobile checks are viewport emulation, not physical-device tests.",
+  "standaloneCleanInstallAndBuild": true,
+  "projectPathHosting": true,
+  "staticLinksAndInventories": true
+}
