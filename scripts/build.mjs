@@ -18,7 +18,7 @@ export async function generate(){
  await writeFile(path.join(dist,'assets/style.css'),(await transform(await read('src/style.css'),{loader:'css',minify:true})).code);
  const siteUrl=new URL(config.siteUrl);
  if(siteUrl.protocol!=='https:'||!siteUrl.pathname.endsWith('/')||siteUrl.search||siteUrl.hash)throw Error('siteUrl must be an HTTPS base URL ending in /');
- const footer=`<footer class="footer"><p><strong>Darker Discovered</strong> · An investigation into Psygnosis’s Darker.<br>Original game and artwork belong to their respective creators. City and model views reconstructed from game data.</p><div>${config.analysisUrl?`<a href="${escape(config.analysisUrl)}">Full technical analysis ↗</a>`:'The full technical analysis will be published separately.'}${config.repositoryUrl?`<br><a href="${escape(config.repositoryUrl)}">Site source ↗</a>`:''}</div></footer>`;
+ const footer=`<footer class="footer"><p><strong>Darker Discovered</strong> · An investigation into Psygnosis’s Darker.<br>Original game and artwork belong to their respective creators. City and model views reconstructed from game data.</p><div>${config.analysisUrl?`<a href="${escape(config.analysisUrl)}">Darker project overview ↗</a>`:'The full technical analysis will be published separately.'}${config.repositoryUrl?`<br><a href="${escape(config.repositoryUrl)}">Source on GitHub ↗</a>`:''}</div></footer>`;
  const page=(key,title,body,{viewer=false,toc=''}={})=>{
   const base=key==='home'?'./':'../';
   const url=new URL(key==='home'?'':`${key}/`,siteUrl).href;

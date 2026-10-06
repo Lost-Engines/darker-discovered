@@ -109,7 +109,7 @@ The viewers let us inspect the recovered cities and models. They leave the origi
 
 That work has two planned stages. First, a readable implementation preserving Darker's arithmetic, drawing logic and interpretation of the original assets. Once that behaviour is understood and reproduced, a later engine can use converted assets and support the browser, flexible window sizes and adjustable graphics.
 
-The full analysis will be released separately, with code references, extraction tools, execution experiments and the detailed studies of missions and audio. It contains the evidence behind this account, including the parts we still cannot explain.
+The [full investigation](https://lostengines.com/darker) includes code references, extraction tools, execution experiments and the detailed studies of missions and audio. It contains the evidence behind this account, including the parts we still cannot explain.
 
 ### Evidence and credits
 
