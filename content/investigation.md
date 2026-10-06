@@ -58,7 +58,9 @@ Fountains provided another surprise. Their motion comes from **procedural vertex
 
 <figure><img src="../images/model-fountain.webp" alt="One of the recovered fountain ornaments displayed in the model viewer." width="1200" height="800"><figcaption>The gallery exposes recovered animation and linked states where available. Fountain pieces and their effects are separate definitions; one component is not the whole assembled fountain.</figcaption></figure>
 
-## A prompt that had been waiting for decades
+## Bringing undocumented cheats to light
+
+**To our knowledge, this investigation is the first public documentation of Darker’s hidden cheat commands.** We are not aware of any earlier published account, in contemporary games magazines or online. The commands were recovered by tracing the executable, then tested in the running game—not copied from an existing cheat list. An earlier source could still surface, but these appear to have remained undocumented for more than thirty years.
 
 Strings in the executable included “The Jason Brooke special” and “Lyndon's little snooze”. Their consumers led to an undisclosed input mode, sharing an editor with ordinary name entry but taking a different dispatch path.
 
