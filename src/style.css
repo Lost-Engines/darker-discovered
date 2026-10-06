@@ -21,3 +21,19 @@
 .location-labels button{position:absolute;pointer-events:auto;transform:translate(-50%,-100%);padding:3px 6px;border:1px solid #829da8;border-radius:3px;background:#14202de8;color:#f0f3f3;white-space:nowrap;font:11px/1.4 system-ui}
 .location-labels button[aria-pressed=true]{border-color:#ebca80;background:#3a3320;color:#fff1c7;z-index:1}
 .exhibit-caption a{white-space:normal;text-underline-offset:3px}
+
+/* Keep the parent project alongside the site identity, including on mobile. */
+.brand-links{display:flex;align-items:center;gap:22px;min-width:0}
+.brand-links .brand{white-space:nowrap}
+.parent-brand{text-transform:uppercase;border-right:1px solid var(--line);padding-right:22px}
+@media(max-width:1100px){
+ .menu-toggle{display:block;flex-shrink:0}
+ .nav-links{display:none;position:absolute;top:100%;left:0;right:0;padding:24px;background:var(--paper);color:var(--ink);border-bottom:1px solid var(--line);flex-direction:column;gap:20px}
+ .nav-links.open{display:flex}
+}
+@media(max-width:600px){
+ .topbar{gap:16px}
+ .brand-links{align-items:flex-start;flex-direction:column;gap:10px}
+ .parent-brand{border:0;padding:0}
+ .brand-links .brand span{display:inline;margin:0 0 0 8px}
+}
