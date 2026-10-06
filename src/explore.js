@@ -36,7 +36,7 @@ async function main(){
   window.darkerViewer=viewer; // Useful for local screenshots and browser verification.
 }
 async function loadCity(){
-  const request=++token;status('Assembling the city…');$('viewport').setAttribute('aria-busy','true');
+  const request=++token;status('Loading map…');$('viewport').setAttribute('aria-busy','true');
   try{
     const map=catalog.maps.find(m=>m.id===+$('map').value),meta=catalog.banks.find(b=>b.id===map.bank);
     const [loaded,cells]=await Promise.all([data(meta.file),data(map.file)]);if(request!==token)return;
@@ -51,11 +51,11 @@ async function loadCity(){
 function selectType(){
   const type=+$('type').value;viewer.select(type,$('isolate').checked);
   $('focus').disabled=!type;
-  $('selection').textContent=type?`${bank.models[`city-${type}`].name} — ${viewer.cells.filter(n=>n===type).length} placements`:'Click a building to find its relatives across the city.';
+  $('selection').textContent=type?`${bank.models[`city-${type}`].name} — ${viewer.cells.filter(n=>n===type).length} placements`:'Click a building to highlight others of the same type.';
   $('model-link').hidden=!type;if(type)$('model-link').href=`../models/?bank=${catalog.maps.find(m=>m.id===+$('map').value).bank}&model=city-${type}`;
 }
 async function loadGallery(initial){
-  const request=++token;status('Opening the collection…');
+  const request=++token;status('Loading models…');
   try{
     const meta=catalog.banks.find(b=>b.id===+$('bank').value);const loaded=await data(meta.file);if(request!==token)return;bank=loaded;
     $('collection-name').textContent=meta.region;$('era-label').textContent=meta.era==='retail'?'1995 · Retail':`${meta.era} · Demo`;

@@ -1,72 +1,70 @@
-## A familiar skyline, an unfamiliar machine
+## Back to Darker's city
 
-Darker, released by Psygnosis in 1995, makes its city the centre of the experience. You fly between buildings, seek out light to replenish your energy, and learn a landscape that is much larger than the view through your cockpit. Its stark silhouettes and narrow colour ramps give it a remarkably distinctive atmosphere.
+In Darker, released by Psygnosis in 1995, you learn the city a few streets at a time. Buildings disappear into the distance, light towers keep your craft supplied with energy, and the view from the cockpit gives you only a small part of the picture. Seeing the whole place laid out at once was one of the attractions of taking the game apart.
 
-This investigation began with an ordinary DOS installation and a practical question: **what is actually inside it?** Could its cities, craft and systems be recovered well enough to understand how the game worked—and eventually reproduce that behaviour?
-
-The answer involved more than extracting a few meshes. The executable hid its startup behind interleaved instruction streams. Models turned out to be little drawing programs. Familiar surfaces that looked textured were carrying vertex shades. Two demo releases then supplied an unexpected record of the engine's development.
+We started with a working DOS installation. The aim was to recover its assets and understand enough of the code to build a faithful new implementation. We soon found ourselves decoding a model instruction language, checking flight arithmetic and trying cheat phrases that apparently nobody had published in thirty years. Two demos supplied earlier versions of the same engine, along with some rather less finished cities.
 
 <figure><img src="../images/city-hero.webp" alt="The reconstructed Delphi city viewed from above, with its dense skyline and regularly spaced light towers." width="1440" height="900"><figcaption>Delphi assembled from the recovered map and model definitions. This is our modern inspection renderer, not a screenshot of the DOS game. <a href="../cities/?map=68">Explore the city →</a></figcaption></figure>
 
-## First, persuade the executable to make sense
+## Getting past the loader
 
-The executable had a valid DOS header, but reading its startup as a conventional sequence of instructions produced nonsense. The copy was known to run. The problem was our interpretation.
+The first disassembly was mostly nonsense. The executable had a valid DOS header and ran in DOSBox, so we knew there had to be a sensible path through those bytes. Reading them in order was getting us nowhere.
 
-Its loader uses the processor's **trap flag**, normally associated with single-stepping, as part of its control flow. After an instruction executes, a tiny interrupt handler exchanges the next instruction address with another saved address. Execution weaves between two streams. A branch can enter bytes that a linear disassembler has already interpreted as part of a different instruction.
+The loader uses the processor's **trap flag**, normally used for single-stepping. After an instruction executes, a tiny interrupt handler exchanges the next instruction address with another saved address. Execution alternates between two streams. A branch can land in bytes that the disassembler has already treated as part of a different instruction.
 
-That distinction mattered in practice. An initial emulator experiment stopped at the interrupt instead of reproducing the installed handler. It looked like failure in the executable, but it was a missing part of the experimental environment. Following an uninterrupted DOSBox trace exposed the actual path to the depacker.
+Our first emulator experiment stopped at that interrupt. We had failed to reproduce the handler that the program installed for itself. An uninterrupted DOSBox trace let us follow the loader through to its decompression routine.
 
-Once understood, the loader could be reduced to deterministic transformations and an LZ-style decoder. A standalone extractor recovered an initialized **65,536-byte image**, matching an independent DOSBox memory capture byte for byte. That figure describes the recovered executable image, **not the size of the whole game**: city geometry, maps, audiovisual resources and other data live elsewhere.
+We then wrote a standalone extractor that applies the loader's transformations and an LZ-style decoder. It recovered an initialised **65,536-byte executable image**, identical to an independent DOSBox memory capture. The rest of the game, including its cities, models and audiovisual resources, is stored in separate data files.
 
-<figure><img src="../images/unpacking.svg" alt="Packed DOS executable passes through the interleaved loader and LZ-style decoding to a 64 KiB executable image; an independent DOSBox capture verifies the result." width="960" height="300"><figcaption>Two independent paths to the same bytes. Matching a runtime capture gave us a firmer foundation than plausible-looking disassembly alone.</figcaption></figure>
+<figure><img src="../images/unpacking.svg" alt="Packed DOS executable passes through the interleaved loader and LZ-style decoding to a 64 KiB executable image; an independent DOSBox capture verifies the result." width="960" height="300"><figcaption>The extractor's output matches the executable image captured from DOSBox, byte for byte.</figcaption></figure>
 
-We have not identified the packer or established whether the unusual loader was written specifically for Darker. An unfamiliar encoding is not enough to attach a tool name or a motive to it.
+The packer's identity remains unknown. We have no evidence yet that the loader was written specifically for Darker.
 
 ## The models are programs
 
-A conventional model file might give you a list of vertices followed by faces. Darker's geometry streams instead tell an interpreter **how to produce the vertices and draw the model**.
+A model is a stream of commands for a small interpreter. Those commands produce vertices, draw faces and decide which parts of an object are visible.
 
-One command supplies coordinates. Others retain a coordinate, replace it, zero it or negate it. A symmetric component can reuse a previous point with a sign change rather than storing three fresh numbers. Relative calls let definitions share drawing subroutines. There are also visibility and distance tests, coloured lines, polygons and special components.
+One command supplies coordinates. Others retain a coordinate, replace it, zero it or negate it. To make a symmetrical part, a definition can reuse an earlier point with a sign change and save storing three more numbers. Relative calls allow models to share drawing subroutines. Other commands test visibility or distance, or draw coloured lines and special effects.
 
-This explains why a clean extraction requires executing or interpreting the format rather than searching for blocks of plausible coordinates. It also explains why “number of model definitions” is not the same as “number of different meshes”: several records can refer to the same geometry, or build related objects from shared pieces.
+To extract a model, we had to implement that interpreter. Searching the files for plausible sets of coordinates would have missed most of the instructions needed to assemble them. It also became clear why the object lists contained so many similar craft: several definitions can refer to the same geometry, or build related objects from shared pieces.
 
 <figure><img src="../images/model-craft.webp" alt="Recovered Caero fighter geometry, showing its angular form and palette-based shading." width="1200" height="800"><figcaption>The Caero fighter in the model gallery. Stored colours and shades do much of the visual work. <a href="../models/?bank=30&amp;model=special-25">Rotate the model →</a></figcaption></figure>
 
-The city adds another layer. Each map is a **128 × 128 grid** of type references. A type leads to a model definition, with placement information and links to other states. Runtime cell state is kept separately. The original engine interprets that information while drawing; our public explorer assembles a convenient modern view of the recovered content.
+Each city map is a **128 × 128 grid** of object types. A type selects a model definition, with placement information and links to other states. Changes made during play are kept separately from this base map. The explorer on this site uses those definitions to assemble the city in a modern renderer.
 
-<figure><img src="../images/engine.svg" alt="Map cells select model definitions; model commands generate geometry. Runtime cell state selects alternate or damaged forms. The palette and shades feed the software rasterizer, which produces the indexed framebuffer." width="960" height="480"><figcaption>A simplified path from map data to an image. This diagram describes recovered relationships, rather than claiming to reproduce the original source-code modules.</figcaption></figure>
+<figure><img src="../images/engine.svg" alt="Map cells select model definitions; model commands generate geometry. Runtime cell state selects alternate or damaged forms. The palette and shades feed the software rasteriser, which produces the indexed framebuffer." width="960" height="480"><figcaption>How the map, model commands and palette contribute to a frame. The division into boxes is ours; the original source-code structure is unknown.</figcaption></figure>
 
-Getting placement right was its own investigation. Rotation direction and a reflected horizontal axis each produced cities that initially looked plausible. Roads and walls exposed the rotation error; comparison with the correctly oriented 2D map exposed the reflection. A recognisable skyline was a useful milestone, but not sufficient evidence of correct coordinates.
+Our first assembled city had plenty of convincing buildings and some deeply unconvincing roads. We had applied rotations in the wrong direction. Correcting that exposed a second mistake: the entire 3D map was reflected east to west. Comparing it with the correctly oriented 2D map let us put that right too.
 
 ## Colour without texture maps
 
-Some of the craft's surfaces initially suggested simple texture mapping. Tracing their drawing commands revealed a different explanation: the extra values were **vertex indices paired with shades**.
+Some surfaces on the craft looked as though they carried simple textures. The drawing commands revealed that the extra values were **vertex indices paired with shades**.
 
-The renderer interpolates shades within a palette range. With a small number of discrete colours, that interpolation can look surprisingly texture-like. The F9 rendering toggle changes the shaded path to a flat-colour fallback; the decoded commands did not establish bitmap texture mapping.
+The renderer interpolates between those shades using a limited range of palette colours. The resulting bands can look like surface detail. Pressing F9 in the game switches from this shading to a flat-colour fallback. We found no bitmap texture mapping in these commands.
 
-The face-colour byte also carries structure. Its upper bits select one of eight 32-entry palette ranges, while the lower bits identify a shade or a special dynamic value. Distance-dependent lookup tables then alter the result. The palette is part of the rendering machinery, not merely a final choice of colours.
+Each face-colour byte selects both a palette range and a shade. Its upper bits choose one of eight 32-entry ranges; the lower bits give the shade or a special dynamic value. Distance lookup tables modify the result before drawing. Changing a palette therefore affects the shading and distance effects as well as the colours of individual objects.
 
-Try the **Flat colours** switch in the gallery to compare these two presentations. The viewer preserves the recovered palettes and vertex shades, but its projection, clipping and GPU rasterization are modern. It does not reproduce every DOS rounding decision, visibility branch or distance fade.
+The gallery's **Flat colours** switch shows the difference. Our viewer uses the recovered palettes and vertex shades with modern projection, clipping and GPU rasterisation. It does not reproduce DOS rounding, visibility branches or distance fading.
 
 ## A city with more than one state
 
-An apparently closed hangar and an open interior can be linked definitions of the same structure. Landing lights have dim and lit forms. Destroyed buildings can change models. Some of the definitions with no direct map placement are essential alternate states rather than abandoned objects.
+Closed hangars have linked definitions containing their open interiors. Landing lights have dim and lit forms, and damaged buildings can switch to different models. Several apparently unused definitions turned out to be the other state of an object already on the map.
 
-The light tower is especially revealing. Its solid base and top are geometry, while the ball of light above it is a separate camera-facing disc. Treating everything as triangles would lose part of the object. The explorer normally shows the towers illuminated, matching the familiar experience of flying through the game.
+A light tower combines ordinary geometry for its base and top with a camera-facing disc for the ball of light. The explorer starts with the towers illuminated, as they usually are in the game.
 
-Fountains provided another surprise. Their motion comes from **procedural vertex displacement**, driven by stored parameters and a sine table. A player-recorded cycle of roughly four seconds helped check the interpretation; the recovered clock relationship gives a cycle of about 4.1 seconds. Gates use a separate extension parameter. These are small authored mechanisms, not imported skeletal animation.
+The fountains move by **displacing vertices**, using stored parameters and a sine table. We checked the decoded motion against a recording made in the game: a cycle took a little over four seconds, agreeing with the roughly 4.1 seconds implied by the recovered clock. Gates have their own extension parameter, which the model gallery exposes as a slider.
 
-<figure><img src="../images/model-fountain.webp" alt="One of the recovered fountain ornaments displayed in the model viewer." width="1200" height="800"><figcaption>The gallery exposes recovered animation and linked states where available. Fountain pieces and their effects are separate definitions; one component is not the whole assembled fountain.</figcaption></figure>
+<figure><img src="../images/model-fountain.webp" alt="One of the recovered fountain ornaments displayed in the model viewer." width="1200" height="800"><figcaption>A fountain ornament. The pool, moving pieces and effects have separate definitions; the gallery lets you inspect each part.</figcaption></figure>
 
 ## Bringing undocumented cheats to light
 
-**To our knowledge, this investigation is the first public documentation of Darker’s hidden cheat commands.** We are not aware of any earlier published account, in contemporary games magazines or online. The commands were recovered by tracing the executable, then tested in the running game—not copied from an existing cheat list. An earlier source could still surface, but these appear to have remained undocumented for more than thirty years.
+**To our knowledge, this is the first public documentation of Darker's hidden cheat commands.** We are not aware of any earlier account in contemporary games magazines or online. We recovered the commands from the executable and tested them in the game. An older source may yet turn up, but they appear to have gone unpublished for more than thirty years.
 
-Strings in the executable included “The Jason Brooke special” and “Lyndon's little snooze”. Their consumers led to an undisclosed input mode, sharing an editor with ordinary name entry but taking a different dispatch path.
+The first clues were strings such as “The Jason Brooke special” and “Lyndon's little snooze”. Tracing the code that referred to them led to a hidden input mode. It borrows the game's name-entry editor, then sends the text to a separate command handler.
 
 On the retail game-selection screen, type **`*3`**: Shift+8, release Shift, then 3 on the number row. The prompt changes to **STAR THREE — What do you want?** Exact phrases, including punctuation, select handlers that patch the running program.
 
-<figure><img src="../images/star-three.webp" alt="The original DOS game displaying STAR THREE and the prompt What do you want?" width="960" height="720"><figcaption>The hidden prompt captured in the original executable under DOSBox. Unlike the 3D illustrations, this is evidence from the running game.</figcaption></figure>
+<figure><img src="../images/star-three.webp" alt="The original DOS game displaying STAR THREE and the prompt What do you want?" width="960" height="720"><figcaption>The hidden prompt in the original game, captured under DOSBox.</figcaption></figure>
 
 | Retail phrase | What the investigation established |
 | --- | --- |
@@ -75,48 +73,46 @@ On the retail game-selection screen, type **`*3`**: Shift+8, release Shift, then
 | Who gives true life? | Alters damage handling; it is not blanket protection from scenery collisions. |
 | Level X | Enables X to advance to the next-level sequence. |
 
-Even the string boundaries contained a trap. An apparent “Level XI” ended with a byte that was really part of a handler address. The original matcher accepted **Level X** and rejected the extra letter. That is the sort of detail a strings dump cannot settle by itself.
+“Level XI” briefly looked like another clue. The final I was actually a byte from a handler address, immediately after the text. The game's matcher accepted **Level X** and rejected the extra letter. Even the cheat list needed debugging.
 
-The demos reuse some phrases but do not consistently give them the retail effects. A familiar label is not evidence of identical behaviour across releases.
+Some of these phrases also exist in the demos, where their effects differ. The table above applies to the retail game.
 
-## A compact engine with very specific arithmetic
+## Assembly and arithmetic
 
-The inspected core strongly suggests substantial handwritten 16-bit x86 assembly. State is sometimes stored in immediate operands inside instructions. Helpers share code tails or enter intermediate labels. Registers and flags carry carefully tailored interfaces. One small transition helper takes its caller's return address, installs it as an object's next update callback, and continues there.
+Much of the core looks like handwritten 16-bit x86 assembly. It stores some state directly in instruction operands, shares the ends of routines, and enters functions halfway through. Registers and processor flags pass information in ways tailored to particular callers. We cannot identify the assembler, or say that every component was written this way; the source and authoring tools remain missing.
 
-That is strong evidence about the style of construction, but it does **not** identify a particular assembler or prove that every component was written in assembly. The original source organization and authoring tools have not been recovered.
+One particularly economical helper takes its caller's return address and installs it as an object's next update function. It then continues execution there. The following code has become the object's new behaviour, without the caller having to supply its address explicitly.
 
-Object callbacks give the engine recognisable structure: craft can move between startup, normal flight, landing and other behaviours by changing their update function. Mission commands have their own dispatch machinery. Rendering has a geometry interpreter. Audio has separately identifiable Sound Images Generation 2 drivers. A compact executable can still contain several distinct systems.
+Changing update functions lets craft move between startup, flight and landing behaviours. Elsewhere, mission commands go through their own dispatcher, model commands through the geometry interpreter, and audio through identifiable Sound Images Generation 2 drivers. These give us useful boundaries to follow when reading the code.
 
-Flight itself depends on fixed-point arithmetic, fractional position accumulation, wrapping angles and stored trigonometric tables. Replacing these with convenient floating-point formulas could change behaviour even if the new code looked mathematically equivalent. The useful question is not only “what formula is this?” but “what widths, rounding, ordering and side effects does this machine actually use?”
+Flight calculations use fixed-point arithmetic, accumulated fractional positions, wrapping angles and stored trigonometric tables. A floating-point translation could look equivalent on paper and still fly differently. Operand widths, rounding and the order of operations all matter.
 
-We therefore used controlled execution of original instruction sequences to test interpretations. Those experiments help isolate a charging rule or a movement step, while keeping their limits explicit: a helper running in a synthetic harness is not a complete playthrough.
+To check our interpretations, we ran original instruction sequences with controlled inputs and compared the results. That let us examine individual movement steps and charging rules without steering a ship by hand for every experiment. Full playtesting is still needed to check how those pieces behave together.
 
-## The demos are a development record
+## Earlier cities, earlier code
 
-Two demo packages expanded the investigation beyond the released game. We call them the **1993 demo** and **1995 demo** after the supplied packages. The early README carries a May 1993 date; that is a useful clue, not independently established dating for every binary in the package.
+We eventually obtained two demo packages, labelled here as the **1993 demo** and **1995 demo**. The early README is dated May 1993, though that does not date every executable in its package with certainty.
 
-The early surface maps show a substantially different city. Its second surface shares the layout with additions and a different palette, and has light towers where the retail Halon city does not. There are different underground layouts, a satellite-dish model with no identified use in the audited content, and radio messages that make the unfinished character of the build unmistakable.
+The early city has a substantially different layout. Its second surface uses much of the same layout with additions and another palette, including light towers in the city that resembles the later Halon. Retail Halon has none. Underground routes also differ, and the model bank contains a satellite dish for which we have found no use in the content examined. The first save’s radio traffic includes “Your weapons aren't very powerful are they!”, followed by “Never mind:- They haven't got any weapons at all!” These messages appear during play.
 
-Three early executables—X, X1 and X2—initially promised three gameplay revisions. The result was subtler. After accounting for relocation and padding, the complete decoded-image comparison left no unexplained bytes: the substantive differences were startup probe calls. Bypassing the troublesome probe in temporary copies let X and X1 run, and playtesting found no obvious visual difference.
+The early package came with three executables: X, X1 and X2. Only X2 initially ran for us. This seemed a promising place to look for lost gameplay revisions, but a complete comparison accounted for the differences through relocation, padding and startup probe calls. Bypassing a troublesome probe in temporary copies got X and X1 running. Playtesting then found no obvious visual difference. Three executables had mostly bought us three ways to start the same game, two of which got stuck.
 
-Nightmare is a visible special menu choice, not a newly discovered hidden mission. Its later script stages radio warnings and a blackout; vehicle definitions carry their own route programs, including scheduled destruction. Distinguishing those route bytes from ordinary mission commands was necessary to read the sequence correctly.
+The menu's **Nightmare** choice deserved a closer look too. In the 1995 demo, its script arranges radio warnings and a staged blackout. Ground vehicles follow their own route programs, including scheduled destruction. We initially confused some route bytes with mission commands; separating those interpreters made the sequence readable.
 
-A smaller discovery was audible. Several demo paths toggle the PC-speaker port directly to make a short rising chirp. The later Skimma hit cue follows building or object hits without testing whether damage was dealt. The same family of loops appears elsewhere, including a repeating diagnostic-looking path. Whether a particular use was intended player feedback or a development leftover remains uncertain.
+There is also a short rising chirp produced by direct writes to the PC-speaker port. One use in the 1995 demo is a Skimma hit cue, triggered by a building or object hit without checking whether it caused damage. The speaker can sound even with a sound card in use. Related loops occur elsewhere, including a repeating path that looks diagnostic. We cannot yet tell which were intended effects and which were leftovers from development.
 
-You can compare the packages in the city explorer. **Surface A** and **Surface B** are deliberately neutral labels: the demo worlds should not be assumed to have every identity or rule of their retail counterparts.
+Maps from all three releases are available in the city explorer. We have kept the demo map names **Surface A** and **Surface B**, since their resemblance to the retail cities does not establish that they had the same names or roles.
 
-## What this reconstruction is—and what comes next
+## Towards a playable reconstruction
 
-This site is a curated view of the investigation. It includes the most visually useful reconstructions and a readable account of how we reached them. It is not a playable port, and the city and model viewers are not substitutes for the original renderer.
+The viewers let us inspect the recovered cities and models. They leave the original gameplay and much of the software renderer to a separate reconstruction project.
 
-The full analysis retains the material omitted here: source offsets, native execution probes, raw extraction metadata, mission and audio studies, uncertainties and reproducible tools. The separate release will be the place to examine a specific instruction path or challenge an interpretation.
+That work has two planned stages. First, a readable implementation preserving Darker's arithmetic, drawing logic and interpretation of the original assets. Once that behaviour is understood and reproduced, a later engine can use converted assets and support the browser, flexible window sizes and adjustable graphics.
 
-The longer-term plan has two stages. First comes a faithful, readable implementation that preserves the original arithmetic, drawing logic and asset interpretation. A later re-engine can choose modern resources, browser delivery and adjustable presentation with a much clearer understanding of what it is changing.
-
-> The most useful discoveries were often corrections: a texture that was a shade, a string that included an address, a script that was a route, or an unused model that was another object's damaged state.
+The full analysis will be released separately, with code references, extraction tools, execution experiments and the detailed studies of missions and audio. It contains the evidence behind this account, including the parts we still cannot explain.
 
 ### Evidence and credits
 
-The investigation combines static decoding, original-code execution in isolated harnesses, DOSBox captures and hands-on playtesting. Direct observations, inferred explanations and modern presentation choices are kept distinct. Some original behaviours remain incompletely traced.
+We used static decoding, controlled execution of original code, DOSBox captures and hands-on playtesting. The 3D illustrations come from our inspection renderer; the cheat-prompt capture comes from the DOS game. The diagrams are explanatory drawings made for this site.
 
-Darker and its original artwork are the work of their original creators and were published by Psygnosis. This is an independent reverse-engineering and preservation project. The web presentation and diagrams are newly authored; the displayed worlds and craft derive from the game's data. Credits are not a claim of affiliation or ownership of those original assets.
+Darker was published by Psygnosis. Its original artwork and game content belong to their respective creators and rights holders. This independent reverse-engineering project provides the viewers, analysis and web presentation.
