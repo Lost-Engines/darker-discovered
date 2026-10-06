@@ -15,3 +15,9 @@
  .article blockquote{color:#b7d4cc}
  .article td,.article th{border-color:var(--line)}
 }
+
+.location-tools p{font-size:12px;line-height:1.6;color:#a8bac7;margin:0;max-width:420px;align-self:center}
+.location-labels{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.location-labels button{position:absolute;pointer-events:auto;transform:translate(-50%,-100%);padding:3px 6px;border:1px solid #829da8;border-radius:3px;background:#14202de8;color:#f0f3f3;white-space:nowrap;font:11px/1.4 system-ui}
+.location-labels button[aria-pressed=true]{border-color:#ebca80;background:#3a3320;color:#fff1c7;z-index:1}
+.exhibit-caption a{white-space:normal;text-underline-offset:3px}

@@ -4,7 +4,8 @@
     "analysis/models/index.html": "bd92038afaa9d615ed7464b0c5ed1281546e2ddd6444111b49eb8b2cf5d10875",
     "analysis/demos/viewer-data.json": "7b2f0f99250046a4fafdd441ce34a12fac8f63c5af7222fbd73bac2c8857ce06",
     "tools/city_scene.py": "6c5b6c7698bb52bfd11920c8c9118298dcc3a32a27fb31769f7c282035045fd9",
-    "tools/model_motion.js": "4d1fb1077010dc4eb3ecebb2cdfe72668b6b54c23134c7104b55c672e5a42962"
+    "tools/model_motion.js": "4d1fb1077010dc4eb3ecebb2cdfe72668b6b54c23134c7104b55c672e5a42962",
+    "analysis/city/named-locations.json": "344096961131ad78b23a6354f71996337dda576c5f0bca49e12a04fb83d7120d"
   },
   "maps": 17,
   "banks": 10

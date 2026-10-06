@@ -43,7 +43,7 @@ if(selection>0.&&abs(vType-selection)>.1)c*=.28;
 gl_FragColor=vec4(c,1.);}`;
 
 export class Viewer {
-  constructor(host, { city = false, onPick = () => {} } = {}) {
+  constructor(host, { city = false, onPick = () => {}, onRender = () => {} } = {}) {
     this.host = host; this.city = city; this.onPick = onPick; this.dirty = true;
     this.renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
@@ -86,7 +86,7 @@ export class Viewer {
       if (this.playing && time-(this.lastPose || 0) > 80) {
         this.clock = Math.floor(time*.5)%2048; this.lastPose = time; this.updateAnimation();
       }
-      if (this.dirty) { this.renderer.render(this.scene, this.camera); this.dirty = false; }
+      if (this.dirty) { this.renderer.render(this.scene, this.camera); onRender(); this.dirty = false; }
     }; requestAnimationFrame(tick);
   }
   clear() {
@@ -192,6 +192,8 @@ export class Viewer {
     this.dirty=true;
   }
   overview(){this.camera.position.set(64,90,54);this.controls.target.set(64,0,-64);this.controls.update();this.controls.saveState();this.dirty=true;}
+  projectLocation([x,y]){const p=new THREE.Vector3(127.5-x,1,-y-.5).project(this.camera);return [p.x,p.y,p.z];}
+  focusLocation([x,y]){const p=new THREE.Vector3(127.5-x,.3,-y-.5);this.controls.target.copy(p);this.camera.position.copy(p).add(new THREE.Vector3(10,9,13));this.controls.update();this.dirty=true;}
   focusType(type){const at=this.cells.indexOf(type);if(at<0)return;const p=new THREE.Vector3(128-at%128,0,-Math.floor(at/128));this.controls.target.copy(p);this.camera.position.copy(p).add(new THREE.Vector3(5,3,7));this.controls.update();this.dirty=true;}
   setFlat(value){this.flat=value;if(this.material)this.material.uniforms.flatMode.value=value?1:0;this.dirty=true;}
 }

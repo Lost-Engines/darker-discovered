@@ -1,19 +1,21 @@
 import { Viewer } from './viewer.js';
+import { Locations } from './locations.js';
 const $=id=>document.getElementById(id), root=new URL('../data/',import.meta.url);
 const cache=new Map();
 async function data(file){if(!cache.has(file))cache.set(file,fetch(new URL(file,root)).then(r=>{if(!r.ok)throw Error('Unable to load the selected collection.');return r.json()}).catch(e=>{cache.delete(file);throw e}));return cache.get(file)}
 const query=new URLSearchParams(location.search),city=document.body.dataset.page==='cities';
-let catalog,viewer,bank,token=0;
+let catalog,viewer,bank,locations,token=0;
 function options(select,items){select.replaceChildren(...items.map(([value,label])=>new Option(label,value)))}
 function status(text){$('viewer-status').textContent=text}
 async function main(){
   catalog=await data('catalog.json');
-  viewer=new Viewer($('viewport'),{city,onPick:type=>{$('type').value=String(type);selectType()}});
+  viewer=new Viewer($('viewport'),{city,onRender:()=>locations?.update(),onPick:type=>{$('type').value=String(type);selectType()}});
   $('flat').onchange=()=>viewer.setFlat($('flat').checked);
   $('reset').onclick=()=>city?viewer.overview():viewer.controls.reset();
   $('zoom-in').onclick=()=>{viewer.controls.dollyIn(1.35);viewer.controls.update()};
   $('zoom-out').onclick=()=>{viewer.controls.dollyOut(1.35);viewer.controls.update()};
   if(city){
+    locations=new Locations(viewer,$('viewport'),$('location-name'),$('locations-toggle'),$('location-note'));
     options($('era'),[['retail','1995 retail'],['1993','1993 demo'],['1995','1995 demo']]);
     const initial=catalog.maps.find(m=>String(m.id)===query.get('map'));
     $('era').value=initial?.era||'retail';
@@ -36,11 +38,12 @@ async function main(){
   window.darkerViewer=viewer; // Useful for local screenshots and browser verification.
 }
 async function loadCity(){
-  const request=++token;status('Loading map…');$('viewport').setAttribute('aria-busy','true');
+  const request=++token;locations.setLocations([]);$('locations-panel').hidden=true;status('Loading map…');$('viewport').setAttribute('aria-busy','true');
   try{
     const map=catalog.maps.find(m=>m.id===+$('map').value),meta=catalog.banks.find(b=>b.id===map.bank);
-    const [loaded,cells]=await Promise.all([data(meta.file),data(map.file)]);if(request!==token)return;
+    const [loaded,cells,names]=await Promise.all([data(meta.file),data(map.file),map.id===68?data('named-locations.json'):null]);if(request!==token)return;
     bank=loaded;viewer.setBank(bank,catalog.animation);viewer.cityScene(cells);
+    $('locations-panel').hidden=!names;locations.setLocations(names?.locations||[]);
     options($('type'),[['0','All buildings'],...[...new Set(cells)].filter(x=>x&&bank.models[`city-${x}`]).sort((a,b)=>a-b).map(n=>[n,`${bank.models[`city-${n}`].name} · ${n}`])]);
     $('isolate').checked=false;selectType();$('collection-name').textContent=map.name;
     $('era-label').textContent=map.era==='retail'?'1995 · Retail':`${map.era} · Demo`;

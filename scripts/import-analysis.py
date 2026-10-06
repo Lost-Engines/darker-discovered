@@ -71,6 +71,8 @@ for m in city['maps']:
     identifier=m['resource'];path=out/f'map-{identifier}.json';path.write_text(json.dumps(m['cells'],separators=(',',':'))+'\n')
     catalog['maps'].append({'id':identifier,'bank':m['bank'],'name':name,'file':path.name,'era':'retail' if identifier<100 else str(identifier//100)})
 (out/'catalog.json').write_text(json.dumps(catalog,separators=(',',':'))+'\n')
-provenance={'scope':'Derived display geometry, palettes and map layouts only. No executable, original pack, save or raw resource export. Visibility branches are flattened; presentation is not the original renderer.','sources':{p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in ['analysis/models/index.html','analysis/demos/viewer-data.json','tools/city_scene.py','tools/model_motion.js']},'maps':len(catalog['maps']),'banks':len(catalog['banks'])}
+locations=json.loads((root/'analysis/city/named-locations.json').read_text())
+(out/'named-locations.json').write_text(json.dumps({'map':68,'approximate':True,'locations':[{k:r[k] for k in ('id','name','cell')} for r in locations['locations'] if r['resource']==68]},separators=(',',':'))+'\n')
+provenance={'scope':'Derived display geometry, palettes and map layouts only. No executable, original pack, save or raw resource export. Visibility branches are flattened; presentation is not the original renderer.','sources':{p:hashlib.sha256((root/p).read_bytes()).hexdigest() for p in ['analysis/models/index.html','analysis/demos/viewer-data.json','tools/city_scene.py','tools/model_motion.js','analysis/city/named-locations.json']},'maps':len(catalog['maps']),'banks':len(catalog['banks'])}
 (site/'content/data-provenance.json').write_text(json.dumps(provenance,indent=2)+'\n')
 print(provenance['maps'],'maps;',provenance['banks'],'banks')
