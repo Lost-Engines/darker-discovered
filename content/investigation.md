@@ -116,3 +116,11 @@ The [full investigation](https://lostengines.com/darker) includes code reference
 We used static decoding, controlled execution of original code, DOSBox captures and hands-on playtesting. The 3D illustrations come from our inspection renderer; the cheat-prompt capture comes from the DOS game. The diagrams are explanatory drawings made for this site.
 
 Darker was published by Psygnosis. Its original artwork and game content belong to their respective creators and rights holders. This independent reverse-engineering project provides the viewers, analysis and web presentation.
+
+## Update: now playable!
+
+It flies! The full, faithful reconstruction of Darker is now available to download and play. Written in modern C++, it brings the original game's flight, combat, missions and software rendering back to life. After all those hours spent tracing instructions and inspecting buildings, we can finally climb into the cockpit and fly home.
+
+[**Download and play Darker ↗**](https://github.com/Lost-Engines/darker-cpp/releases)
+
+The reconstruction is open source, too: [browse the complete C++ source on GitHub](https://github.com/Lost-Engines/darker-cpp). And yes, the scenery is still quite capable of killing you.
