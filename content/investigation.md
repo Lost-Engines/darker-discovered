@@ -107,7 +107,7 @@ Maps from all three releases are available in the city explorer. We have kept th
 
 The viewers let us inspect the recovered cities and models. They leave the original gameplay and much of the software renderer to a separate reconstruction project.
 
-That work has two planned stages. First, a readable implementation preserving Darker's arithmetic, drawing logic and interpretation of the original assets. Once that behaviour is understood and reproduced, a later engine can use converted assets and support the browser, flexible window sizes and adjustable graphics.
+[Darker C++](https://github.com/Lost-Engines/darker-cpp) preserves Darker's arithmetic, drawing logic and interpretation of the original assets. [Darker Redux](https://github.com/Lost-Engines/darker-redux) builds on it with higher resolutions, longer views and in-game options. Both run natively; a future browser engine remains a separate project.
 
 The [full investigation](https://lostengines.com/darker) includes code references, extraction tools, execution experiments and the detailed studies of missions and audio. It contains the evidence behind this account, including the parts we still cannot explain.
 
@@ -124,3 +124,5 @@ It flies! The full, faithful reconstruction of Darker is now available to downlo
 [**Download and play Darker ↗**](https://github.com/Lost-Engines/darker-cpp/releases)
 
 The reconstruction is open source, too: [browse the complete C++ source on GitHub](https://github.com/Lost-Engines/darker-cpp). And yes, the scenery is still quite capable of killing you.
+
+For an enhanced version, try [Darker Redux](https://github.com/Lost-Engines/darker-redux). It keeps the original game data and adds higher resolutions, adjustable field of view, longer views, in-game options and fixes to original bugs.
