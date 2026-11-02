@@ -40,12 +40,28 @@ Leave them empty until real destinations exist; the build omits those links.
 
 ## Editing and refreshing
 
+Write the articles as engineers explaining what we found. Lead with how a
+mechanism works, then develop the details that make it interesting. Use concrete
+examples and short source links. Keep evidence inventories and reproduction
+notes in the maintainer files; captions should identify what is shown and where
+it came from. Avoid routine disclaimers, obvious observations and paragraph-ending
+“X is not Y” contrasts.
+
+Readers have no history with our development work. If a reconstruction mistake
+helps explain the engine, introduce the initial mistake, describe what it looked
+like and explain how we resolved it. Omit development anecdotes that add nothing
+to the explanation. Use “we observed” or “it was observed” for team findings.
+
 - `content/investigation.md`: the article; diagrams/screenshots are in
   `public/images/`.
 - `content/graphics-engine.md`: the separate renderer article, at `graphics/`.
   Its diagrams and native captures are in `public/images/graphics/`;
   `public/data/graphics-figures.json` records provenance and reproduction.
   `src/graphics.js` supplies optional comparison controls and the shade-table demo.
+- `content/flight-model.md`: the companion flight article, at `flight/`.
+  `content/flight-evidence.md` maps claims to the original-code fixtures and source.
+  `public/data/flight-provenance.json` records figures and optional regeneration;
+  `src/flight.js` supplies the beacon-field sampler.
 - `src/`: independent presentation and Three.js viewer code. Palette-index
   shading and the recovered animation formulas are retained; projection,
   rasterization, input and UI are modern.

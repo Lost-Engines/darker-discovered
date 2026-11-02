@@ -69,3 +69,8 @@
 @media(max-width:600px){.engine-demo{padding:15px}.engine-demo-controls{grid-template-columns:1fr}.article pre{padding:14px}.article pre code{font-size:12px}}
 .engine-article > *{min-width:0}
 .engine-article .article{overflow-wrap:break-word}
+
+.flight-switches{display:flex;gap:10px;flex-direction:column;justify-content:center}
+.flight-switches label{justify-content:flex-start;gap:10px}
+.flight-switches input{width:auto}
+.flight-demo [role=status]{min-height:5em}

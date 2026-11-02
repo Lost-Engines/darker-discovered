@@ -1,0 +1,129 @@
+{
+  "title": "Inside Darker’s flight model — evidence and illustration provenance",
+  "date": "2026-11-02",
+  "baseline": "English 1995 retail; faithful engine, not Redux",
+  "engine_revision": "7cece8ab1208ef3771516a71f44ff88064c815ad",
+  "original_image_sha256": "7599201a01aa24b7e6ad1ae4295d493821cde7c3a43b247c464522626c0380a4",
+  "manual": {
+    "source": "Darker_Manual_DOS_EN-FR-DE-ES-IT.pdf; English printed pp. 4, 6–8, 14–15, 17",
+    "sha256": "42c1bb842ddc70dd784f8c63468d6b2e717ac201de5a3184dedb88ce74a92f64",
+    "use": "Fictional premise, craft and cockpit terminology; flight equations are recovered from code."
+  },
+  "native_capture": {
+    "mission": 1,
+    "description": "Actual following-camera view of the selected mission after ordinary flight",
+    "sha256": "0cbd1528cab98b990b9168cddca29f0853a61653a3412398ecbf4cde550cbd74",
+    "captured_elapsed_seconds": 23.698,
+    "source_sha256": "9acc1357ed79390b170964eb288ba6874009c9a807122cc7d31baf25b461bff3",
+    "source_revision": "7cece8ab1208ef3771516a71f44ff88064c815ad",
+    "interventions": "Debug mission entry (--level), native impact cheat (--cheat-life), reproducible keyboard input. No mission completion implied. No memory edits or invented events."
+  },
+  "native_capture_source": "darker-reverse/exports/H004/screenshots-fast/04-following.png; copied unchanged",
+  "reused_tunnel_capture": "images/graphics/tunnel.png; see data/graphics-figures.json for complete capture provenance",
+  "reproduction": {
+    "requirements": "Built faithful darker-cpp at the recorded revision, C++26 compiler. Python and matplotlib only to redraw SVGs. None are required to build or read the website.",
+    "compile": "c++ -std=c++2c -O2 -I \"$ENGINE/src\" -I \"$ENGINE/tests\" -I \"$ENGINE\" scripts/export-flight-figures.cpp -Wl,--start-group \"$ENGINE/build-relwithdebinfo/libdarker_game.a\" \"$ENGINE/build-relwithdebinfo/libdarker_maths.a\" \"$ENGINE/build-relwithdebinfo/libdarker_resources.a\" \"$ENGINE/build-relwithdebinfo/libframework_core.a\" -Wl,--end-group -o /tmp/darker-flight-figures",
+    "export": "/tmp/darker-flight-figures public/data/flight-figures-data.json",
+    "figures": "python3 scripts/render-flight-diagrams.py",
+    "helper_sha256": "1f7b265e04f62e5d72b7f93b695505f7d397c2f7ac659d8e06c405b58ead776d",
+    "diagram_script_sha256": "956ef77e2adc114a79e8f697c2d08a36aa9eecb3f667e50e140de98d786626af",
+    "data_sha256": "3a6ddca35910d58b4fde4396b98350e523f4ebd0bb72ae9adc23fa38d37ac041"
+  },
+  "numeric_columns": {
+    "beacon_samples": [
+      "x_word",
+      "y_word",
+      "height_word",
+      "x_fraction",
+      "y_fraction",
+      "selected_cell_type",
+      "selected_cell_strength",
+      "selected_column",
+      "selected_row",
+      "power"
+    ],
+    "bank_curves": [
+      "bank_degrees",
+      "signed_lift_projection_Q",
+      "caero_lift_full_power",
+      "caero_lift_braked",
+      "skimma_lift_horizontal_speed_600"
+    ],
+    "power_profiles": "Samples every 1/32 map cell from centre (54.5,63.5) to (63.5,63.5), all lattice type-one beacons strength 255; each profile has its stated height.",
+    "caero_steps": "Two actual callbacks with frame_step=8, position (54.5,63.5), height=2400, level attitude, horizontal velocity and initial speed=600, vertical velocity=0, working buffer=16384, other stores zero, no boost, engine enabled. Normal, brake, altitude-hold-at-2400, and zero-strength lattice cases. Collision, input filtering and a rendered scene are not run."
+  },
+  "limits": [
+    "The beacon lab samples one source with exact fixed-width arithmetic; it is not a complete flight simulator.",
+    "Lift comparison freezes attitude and fixes pitch to zero; Skimma roll centring and evolving velocity are not simulated by that chart.",
+    "The controlled callback table is a short state comparison, not a terminal speed or a flight recording.",
+    "SVG route and aircraft silhouettes are explanatory schematics, not game geometry."
+  ],
+  "verification": {
+    "beacon_native_cases": 768,
+    "javascript_beacon_cases": 768,
+    "existing_flight_energy_control_tests": "28282 assertions in 10 test cases passed on 2026-11-02",
+    "native_fixture": "darker-cpp/tests/reference/beacon_energy_samples.h",
+    "native_fixture_sha256": "9644a91377400fbca81b26517eb48c09bb96aa545bf166ff15a3fd37a3bd6943"
+  },
+  "credits": {
+    "game": "Day 1 / Psygnosis, 1995",
+    "writing": "Jas.C.Brooke",
+    "artwork": "Lyndon Brooke",
+    "music": "PC Music",
+    "article_and_diagrams": "Lost Engines"
+  },
+  "figures": [
+    {
+      "file": "images/flight/attitude.svg",
+      "kind": "explanatory diagram",
+      "sha256": "0b870d668df8ab63f35bec494fa4d5ba8cf671d73873e35eca9a7c9b8c0a742e"
+    },
+    {
+      "file": "images/flight/bank-lift.svg",
+      "kind": "numerical plot",
+      "sha256": "61466a5c9be317287124d17fb2b77a89ebfe6c435273bb033f1faaffcc6a5720"
+    },
+    {
+      "file": "images/flight/beacon-selection.svg",
+      "kind": "explanatory diagram",
+      "sha256": "42194ccc6a47c62bbd1ccdf5d9c865dd21e2b54a4b240c59a1d130662656f4bd"
+    },
+    {
+      "file": "images/flight/caero-flight.png",
+      "kind": "faithful native gameplay capture",
+      "sha256": "0cbd1528cab98b990b9168cddca29f0853a61653a3412398ecbf4cde550cbd74"
+    },
+    {
+      "file": "images/flight/controllers.svg",
+      "kind": "explanatory diagram",
+      "sha256": "8107a63160dc0d1856602c46257be2530fc1f49ce5771b7f67f6bb301d2386e9"
+    },
+    {
+      "file": "images/flight/energy-flow.svg",
+      "kind": "explanatory diagram",
+      "sha256": "c48baadf2d48e3bbddfaaf8c6168f1308aba12906df05cdff6ced0154336c74a"
+    },
+    {
+      "file": "images/flight/power-profile.svg",
+      "kind": "numerical plot",
+      "sha256": "16f8d4bc4ae9d2f81070654d4e06b1d3a5a7351d084b060e301c61c1b4548567"
+    },
+    {
+      "file": "images/flight/skimma-response.svg",
+      "kind": "numerical plot",
+      "sha256": "121a764351170a549cc30e672a94ff0de4deb1ec8b836c9c9e4cc5062dfd113a"
+    },
+    {
+      "file": "images/flight/tunnel-guidance.svg",
+      "kind": "explanatory diagram",
+      "sha256": "16ee8349daa20455e83b68bd3af732d794023a7c068fda45b0a820ed6d61085b"
+    },
+    {
+      "file": "images/flight/skimma-model.png",
+      "kind": "modern model-viewer illustration; not gameplay",
+      "source": "Darker Discovered model gallery, bank=31, model=special-26; site base revision 43c3ed2",
+      "capture": "Chromium, 1000×1000 viewport, device scale1, default model orientation, one dollyOut(1.35) adjustment via the existing viewer control, title/buttons hidden. No retouching or resampling.",
+      "sha256": "02f7324ff98a873a3707abc318803fd77227185bd1c4346b41a9470ec29460c0"
+    }
+  ]
+}

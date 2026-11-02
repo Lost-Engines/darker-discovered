@@ -33,3 +33,6 @@ The separate [graphics-engine article](graphics-engine.md) has its own
 [claim-to-evidence guide](graphics-evidence.md). Its native images, explanatory
 figures and exact renderer settings are recorded in
 `public/data/graphics-figures.json`.
+
+The [flight-model article](flight-model.md) has a [flight evidence guide](flight-evidence.md)
+and reproducible numerical figures recorded in `public/data/flight-provenance.json`.

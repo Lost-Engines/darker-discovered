@@ -1,5 +1,5 @@
 {
-  "title": "Inside Darker\u2019s graphics engine \u2014 illustration provenance",
+  "title": "Inside Darker’s graphics engine — illustration provenance",
   "date": "2026-11-02",
   "baseline": "1995 retail renderer; faithful C++ revision 7cece8ab1208ef3771516a71f44ff88064c815ad, not Redux.",
   "credits": {
@@ -167,7 +167,7 @@
     {
       "file": "images/graphics/cockpit-layout.svg",
       "kind": "New explanatory SVG diagram",
-      "sha256": "eecd2b051abfc4a306772a71f9f91a6216d5d2cc92b4f035cf612a9a683e2a6f",
+      "sha256": "79e27fe74689440aa5ad74a9b9e81f7292640ee62fb406ce2d0e4b1e9ab658d1",
       "data_note": "Schematic, not original game artwork or a native algorithm trace."
     },
     {
@@ -186,7 +186,7 @@
       "file": "images/graphics/palettes.svg",
       "kind": "New explanatory SVG diagram",
       "sha256": "9d42b8d30692ca496f3c1d0f766651b103d069f57fd995d6150cb4559509af3d",
-      "data_note": "Ordinary shades 0\u201327 from four source ramps in retail resources 00/16 and 00/17."
+      "data_note": "Ordinary shades 0–27 from four source ramps in retail resources 00/16 and 00/17."
     },
     {
       "file": "images/graphics/pipeline.svg",

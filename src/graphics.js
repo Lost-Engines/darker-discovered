@@ -14,7 +14,7 @@ for (const figure of document.querySelectorAll('[data-comparison]')) {
   for (const button of controls.querySelectorAll('button')) {
     button.addEventListener('click', () => {
       image.src = button.dataset.image;
-      image.alt = `Controlled native-renderer fountain view: ${button.dataset.caption.toLowerCase()}`;
+      image.alt = `Fountain rendered in Darker C++: ${button.dataset.caption.toLowerCase()}`;
       caption.textContent = button.dataset.caption;
       for (const other of controls.querySelectorAll('button')) {
         other.setAttribute('aria-pressed', String(other === button));
