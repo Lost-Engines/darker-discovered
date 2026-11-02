@@ -399,7 +399,7 @@ There is an odd detail in the extra increment. If target and old velocity are bo
 
 The Caero expands the timestep byte by a factor of 257 and halves it for its main movement and energy interval. A further halving produces its drive-accounting step. The Skimma uses that half-scaled interval horizontally but the full expanded interval vertically. Underground motion has its own use of those shared integrators.
 
-To check the reconstruction, we ran the original instructions with known inputs and compared positions, velocities and stored controller state after each update. A one-unit discrepancy could then be traced to a particular operation, such as the zero-change increment above. The [flight trace browser][flight-traces] presents those comparisons. [Movement arithmetic][motion] · [Angular integration][angular]
+To check the reconstruction, we ran the original instructions with known inputs and compared positions, velocities and stored controller state after each update. A one-unit discrepancy could then be traced to a particular operation, such as the zero-change increment above. The [Caero test cases][caero-tests] and [Skimma test cases][skimma-tests] record the inputs and expected state for these checks. [Movement arithmetic][motion] · [Angular integration][angular]
 
 [caero]: https://github.com/Lost-Engines/darker-cpp/blob/7cece8ab1208ef3771516a71f44ff88064c815ad/src/game/caero_flight.cpp
 [caero-header]: https://github.com/Lost-Engines/darker-cpp/blob/7cece8ab1208ef3771516a71f44ff88064c815ad/src/game/caero_flight.h
@@ -424,7 +424,8 @@ To check the reconstruction, we ran the original instructions with known inputs 
 [damage]: https://github.com/Lost-Engines/darker-cpp/blob/7cece8ab1208ef3771516a71f44ff88064c815ad/src/game/player_damage.cpp
 [instruments]: https://github.com/Lost-Engines/darker-cpp/blob/7cece8ab1208ef3771516a71f44ff88064c815ad/src/graphics/flight_instruments.cpp
 [hud]: https://lostengines.com/darker/docs/hud-and-formatted-text.md
-[flight-traces]: https://lostengines.com/darker/analysis/flight-physics/index.html
+[caero-tests]: https://github.com/Lost-Engines/darker-cpp/blob/7cece8ab1208ef3771516a71f44ff88064c815ad/tests/reference/caero_flight_samples.h
+[skimma-tests]: https://github.com/Lost-Engines/darker-cpp/blob/7cece8ab1208ef3771516a71f44ff88064c815ad/tests/reference/skimma_flight_samples.h
 [charging-notes]: https://lostengines.com/darker/docs/flight-physics-and-charging.md
 [control-notes]: https://lostengines.com/darker/docs/flight-controls.md
 [blackouts]: https://lostengines.com/darker/analysis/missions/blackouts.html
