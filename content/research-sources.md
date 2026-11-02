@@ -28,3 +28,8 @@ shade pairs as texture coordinates.
 Screenshots named `city-*` and `model-*` come from this site's modern renderer.
 `star-three.webp` is a format-converted DOSBox evidence capture from the source
 analysis. SVG diagrams are explanatory illustrations, not recovered originals.
+
+The separate [graphics-engine article](graphics-engine.md) has its own
+[claim-to-evidence guide](graphics-evidence.md). Its native images, explanatory
+figures and exact renderer settings are recorded in
+`public/data/graphics-figures.json`.

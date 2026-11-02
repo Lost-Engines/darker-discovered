@@ -42,6 +42,10 @@ Leave them empty until real destinations exist; the build omits those links.
 
 - `content/investigation.md`: the article; diagrams/screenshots are in
   `public/images/`.
+- `content/graphics-engine.md`: the separate renderer article, at `graphics/`.
+  Its diagrams and native captures are in `public/images/graphics/`;
+  `public/data/graphics-figures.json` records provenance and reproduction.
+  `src/graphics.js` supplies optional comparison controls and the shade-table demo.
 - `src/`: independent presentation and Three.js viewer code. Palette-index
   shading and the recovered animation formulas are retained; projection,
   rasterization, input and UI are modern.

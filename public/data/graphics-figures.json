@@ -1,0 +1,210 @@
+{
+  "title": "Inside Darker\u2019s graphics engine \u2014 illustration provenance",
+  "date": "2026-11-02",
+  "baseline": "1995 retail renderer; faithful C++ revision 7cece8ab1208ef3771516a71f44ff88064c815ad, not Redux.",
+  "credits": {
+    "game": "Day 1 / Psygnosis, 1995",
+    "writing": "Jas.C.Brooke",
+    "artwork": "Lyndon Brooke",
+    "music": "PC Music",
+    "article_and_diagrams": "Lost Engines"
+  },
+  "rights": "Original game content remains the work of its creators. No ownership of the original assets is claimed.",
+  "native_figure_reproduction": {
+    "helper": "scripts/render-graphics-figures.cpp in darker-discovered (optional maintainer tool; not part of site build)",
+    "requires": "A C++26 compiler, a built darker-cpp checkout at the recorded revision, original game archives, and a lossless PPM-to-PNG encoder.",
+    "build": "c++ -std=c++2c -O2 -I \"$ENGINE/src\" -I \"$ENGINE\" scripts/render-graphics-figures.cpp -Wl,--start-group \"$ENGINE/build-relwithdebinfo/libdarker_graphics.a\" \"$ENGINE/build-relwithdebinfo/libdarker_game.a\" \"$ENGINE/build-relwithdebinfo/libdarker_maths.a\" \"$ENGINE/build-relwithdebinfo/libdarker_resources.a\" \"$ENGINE/build-relwithdebinfo/libframework_core.a\" -Wl,--end-group -o /tmp/darker-graphics-figures",
+    "run": "/tmp/darker-graphics-figures \"$GAME_DIR\" /tmp/fountain-figures 30 59 71.5 2400 0 -2048",
+    "encoding": "The helper emits P6 PPMs. Encode gouraud.ppm, flat.ppm and unpowered.ppm as PNG without resizing, colour correction or filtering. The article displays pixels with nearest-neighbour CSS.",
+    "helper_sha256": "ea5b062a1a11eba7e1774f1588c473dd8457a940328cfdd380b23b1caedf5f94"
+  },
+  "source_data": {
+    "map_68_sha256": "1ddb55c0968226077baaac3799722bed809e02ab798305b7e11b3d75d171d855",
+    "palette_analysis_source": "darker-reverse/analysis/media/palettes.json",
+    "palette_analysis_sha256": "21dc1dce5ec2b965b56ebff08b4d95fb7acf5799ca5520ba919a29e168f0d586",
+    "shade_demo": "Integer formula translated from model_lighting.cpp, using only the first four source colour ramps. It illustrates colour lookup, not scene visibility, geometry, special colour codes or VGA output.",
+    "original_pack_sha256": {
+      "DARKER.00": "86bdffa2ba15edab7431c1b056feabf6dd68a70f2f0fa99ad7a96e449ad82c4f",
+      "DARKER.01": "17652afc7219497704292a4234d57a3ff3c01705f7b67f811e4ea09dc1daf8a8",
+      "DARKER.02": "32f32eb8d6a80e6d02b680a571abd8aa01df10772126dd6d9450120e43d1c917",
+      "DARKER.03": "9982884a26927b59896b329cf1dea3c7cdd428d9a7ab70e8ac71a8754fad8ea6",
+      "DARKER.04": "d72342a09edc9aa5abfb941fe27d8c81117564f15a981766ef6c5a9b8a5e6cee"
+    }
+  },
+  "figures": [
+    {
+      "file": "images/graphics/delphi-cockpit.png",
+      "kind": "native gameplay capture",
+      "source": "darker-reverse/exports/H004/screenshots-fast/02-launch.png",
+      "source_revision": "7cece8ab1208ef3771516a71f44ff88064c815ad",
+      "executable_sha256": "9acc1357ed79390b170964eb288ba6874009c9a807122cc7d31baf25b461bff3",
+      "interventions": "Debug mission entry (--level), native impact cheat (--cheat-life), reproducible keyboard input. No mission completion implied. No memory edits or invented events.",
+      "capture_seconds": 15.4,
+      "mission": 1,
+      "sha256": "0773aba076372eae2a4d31168e3a2683acf18961becbc62382b1859632e57848",
+      "conversion": "Unmodified PNG; no resampling."
+    },
+    {
+      "file": "images/graphics/tunnel.png",
+      "kind": "native gameplay capture",
+      "source": "darker-reverse/exports/H004/screenshots-tunnel/04-following.png",
+      "source_revision": "7cece8ab1208ef3771516a71f44ff88064c815ad",
+      "executable_sha256": "9acc1357ed79390b170964eb288ba6874009c9a807122cc7d31baf25b461bff3",
+      "interventions": "Debug mission entry (--level), native impact cheat (--cheat-life), reproducible keyboard input. No mission completion implied. No memory edits or invented events.",
+      "capture_seconds": 18.353,
+      "mission": 17,
+      "sha256": "cfb58f99b296204d61ddfd762b1bb71fa2d651976b185da3c6d3e2d774dae45a",
+      "conversion": "Unmodified PNG; no resampling."
+    },
+    {
+      "file": "images/graphics/fountain-gouraud.png",
+      "kind": "controlled faithful-engine renderer output, not gameplay or DOS capture",
+      "engine_repository": "https://github.com/Lost-Engines/darker-cpp",
+      "engine_revision": "7cece8ab1208ef3771516a71f44ff88064c815ad",
+      "renderer": "city_renderer::draw + draw_sky_ground",
+      "bank": 30,
+      "map": 68,
+      "mode": "gouraud",
+      "camera": {
+        "column_cells": 59,
+        "row_cells": 71.5,
+        "altitude_native_units": 2400,
+        "heading_word": 0,
+        "pitch_signed_word": -2048,
+        "roll_word": 0,
+        "origin_pixels": [
+          160,
+          120
+        ]
+      },
+      "radius_cells": 15,
+      "resolution": [
+        320,
+        240
+      ],
+      "animation_clock": 384,
+      "palette_resource": "00/16",
+      "palette_output": "Decoded source RGB, without VGA DAC/scanout simulation.",
+      "state": "Fresh city with assigned variants; for unpowered only, every type-one cell is set to state zero. No mission script, moving craft or combat simulated.",
+      "sha256": "aabd337626889252f6e9a5751da7e5dddb0bcd36e50a3f4889fff94bf746ddd7"
+    },
+    {
+      "file": "images/graphics/fountain-flat.png",
+      "kind": "controlled faithful-engine renderer output, not gameplay or DOS capture",
+      "engine_repository": "https://github.com/Lost-Engines/darker-cpp",
+      "engine_revision": "7cece8ab1208ef3771516a71f44ff88064c815ad",
+      "renderer": "city_renderer::draw + draw_sky_ground",
+      "bank": 30,
+      "map": 68,
+      "mode": "flat",
+      "camera": {
+        "column_cells": 59,
+        "row_cells": 71.5,
+        "altitude_native_units": 2400,
+        "heading_word": 0,
+        "pitch_signed_word": -2048,
+        "roll_word": 0,
+        "origin_pixels": [
+          160,
+          120
+        ]
+      },
+      "radius_cells": 15,
+      "resolution": [
+        320,
+        240
+      ],
+      "animation_clock": 384,
+      "palette_resource": "00/16",
+      "palette_output": "Decoded source RGB, without VGA DAC/scanout simulation.",
+      "state": "Fresh city with assigned variants; for unpowered only, every type-one cell is set to state zero. No mission script, moving craft or combat simulated.",
+      "sha256": "7bbb2f51575481e412faa4129aba86c429edf2499472d0e1d375727a92198718"
+    },
+    {
+      "file": "images/graphics/fountain-unpowered.png",
+      "kind": "controlled faithful-engine renderer output, not gameplay or DOS capture",
+      "engine_repository": "https://github.com/Lost-Engines/darker-cpp",
+      "engine_revision": "7cece8ab1208ef3771516a71f44ff88064c815ad",
+      "renderer": "city_renderer::draw + draw_sky_ground",
+      "bank": 30,
+      "map": 68,
+      "mode": "unpowered",
+      "camera": {
+        "column_cells": 59,
+        "row_cells": 71.5,
+        "altitude_native_units": 2400,
+        "heading_word": 0,
+        "pitch_signed_word": -2048,
+        "roll_word": 0,
+        "origin_pixels": [
+          160,
+          120
+        ]
+      },
+      "radius_cells": 15,
+      "resolution": [
+        320,
+        240
+      ],
+      "animation_clock": 384,
+      "palette_resource": "00/16",
+      "palette_output": "Decoded source RGB, without VGA DAC/scanout simulation.",
+      "state": "Fresh city with assigned variants; for unpowered only, every type-one cell is set to state zero. No mission script, moving craft or combat simulated.",
+      "sha256": "218be3fffede689641033a9199ac9d1f4e4bd4ad388b56455b4a14ec84fa2aa8"
+    },
+    {
+      "file": "images/graphics/bytecode.svg",
+      "kind": "New explanatory SVG diagram",
+      "sha256": "1a85c56d3818ad4d2d76dc9b0fc1d95d16cd07bd5d562eb4df8cfe85f9f658b5",
+      "data_note": "Schematic, not original game artwork or a native algorithm trace."
+    },
+    {
+      "file": "images/graphics/city-map.svg",
+      "kind": "New explanatory SVG diagram",
+      "sha256": "df1f7f23d20a3eb24f70d785c7ec1dfa320fba016cc140ee3c743f953faf13f6",
+      "data_note": "Exact occupancy from the committed map-68.json display snapshot; candidate circle is schematic."
+    },
+    {
+      "file": "images/graphics/cockpit-layout.svg",
+      "kind": "New explanatory SVG diagram",
+      "sha256": "eecd2b051abfc4a306772a71f9f91a6216d5d2cc92b4f035cf612a9a683e2a6f",
+      "data_note": "Schematic, not original game artwork or a native algorithm trace."
+    },
+    {
+      "file": "images/graphics/fountain-reflection.svg",
+      "kind": "New explanatory SVG diagram",
+      "sha256": "281c5d499390d427cf2e4468884b6c525e7ab5525333d6fc6da22fbd7fe50082",
+      "data_note": "Schematic, not original game artwork or a native algorithm trace."
+    },
+    {
+      "file": "images/graphics/painter.svg",
+      "kind": "New explanatory SVG diagram",
+      "sha256": "f441ef1bc51ae4444cf4c5690d61ea890f746b07a8b39ccb99324ac0b2ba9553",
+      "data_note": "Schematic, not original game artwork or a native algorithm trace."
+    },
+    {
+      "file": "images/graphics/palettes.svg",
+      "kind": "New explanatory SVG diagram",
+      "sha256": "9d42b8d30692ca496f3c1d0f766651b103d069f57fd995d6150cb4559509af3d",
+      "data_note": "Ordinary shades 0\u201327 from four source ramps in retail resources 00/16 and 00/17."
+    },
+    {
+      "file": "images/graphics/pipeline.svg",
+      "kind": "New explanatory SVG diagram",
+      "sha256": "e9ae2129b931916a9816705eec9ca1126c6bb6f5553e422376cf11a82692d2de",
+      "data_note": "Schematic, not original game artwork or a native algorithm trace."
+    },
+    {
+      "file": "images/graphics/projection.svg",
+      "kind": "New explanatory SVG diagram",
+      "sha256": "b7b44fc60c611213650f142c0d53e70d98cec2a4fe95b9a2ea19980da2d5b7f5",
+      "data_note": "Schematic, not original game artwork or a native algorithm trace."
+    },
+    {
+      "file": "images/graphics/scanlines.svg",
+      "kind": "New explanatory SVG diagram",
+      "sha256": "96dd78ba5e09a336475320e4394f41635cec8ecccfb60280e5fa71eddef10a1e",
+      "data_note": "Schematic, not original game artwork or a native algorithm trace."
+    }
+  ]
+}

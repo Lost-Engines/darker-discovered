@@ -117,6 +117,8 @@ We used static decoding, controlled execution of original code, DOSBox captures 
 
 Darker was published by Psygnosis. Its original artwork and game content belong to their respective creators and rights holders. This independent reverse-engineering project provides the viewers, analysis and web presentation.
 
+For a step-by-step explanation of the renderer itself, read [Inside Darker’s graphics engine](../graphics/): from vertices and perspective to palette lighting, painter ordering and the fountain’s reflections.
+
 ## Update: now playable!
 
 It flies! The full, faithful reconstruction of Darker is now available to download and play. Written in modern C++, it brings the original game's flight, combat, missions and software rendering back to life. After all those hours spent tracing instructions and inspecting buildings, we can finally climb into the cockpit and fly home.

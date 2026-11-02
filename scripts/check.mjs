@@ -9,7 +9,7 @@ for(const file of list){
  if(/\.(exe|sav|obj|mtl|bin|mid|ogg|wav)$/i.test(file)||/DARKER\.0\d$/i.test(file))errors.push(`Raw resource in site: ${file}`);
  if(!file.endsWith('.html'))continue;
  const html=await readFile(file,'utf8');
- for(const match of html.matchAll(/\b(?:href|src)="([^"]+)"/g)){
+ for(const match of html.matchAll(/\b(?:href|src|data-image)="([^"]+)"/g)){
   const link=match[1].replaceAll('&amp;','&');if(/^(https?:|data:|mailto:)/.test(link))continue;
   const url=new URL(link,`https://local/${path.relative(root,file)}`);
   let target=path.join(root,decodeURIComponent(url.pathname));
