@@ -31,7 +31,7 @@ xchg bp, si     ; save the interrupted IP in SI
 iret            ; resume the other stream
 ```
 
-The bytes are `5D 56 87 EE CF`. The saved code segment stays the same. Only the return offset is exchanged, so both streams live in the same segment.
+The bytes are `5D 56 87 F5 CF`. The saved code segment stays the same. Only the return offset is exchanged, so both streams live in the same segment.
 
 Suppose stream A has just finished an instruction. Its next address, A1, is on the interrupt stack, and SI holds B0. The handler returns to B0 and leaves A1 in SI. After stream B executes one instruction, its next address B1 is exchanged with A1. Execution returns to A1, with B1 ready for the next swap.
 
