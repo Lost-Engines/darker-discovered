@@ -36,3 +36,10 @@ figures and exact renderer settings are recorded in
 
 The [flight-model article](flight-model.md) has a [flight evidence guide](flight-evidence.md)
 and reproducible numerical figures recorded in `public/data/flight-provenance.json`.
+
+The [sound](sound-engine.md), [missions](mission-engine.md),
+[combat](combat-system.md), [loader](executable-loader.md) and
+[demo-history](demo-history.md) articles share a
+[maintenance and evidence guide](research-articles-evidence.md).
+Figure and audio provenance is recorded in
+`public/data/research-articles-provenance.json`.

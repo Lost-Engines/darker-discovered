@@ -65,6 +65,15 @@ to the explanation. Use “we observed” or “it was observed” for team find
 - `src/`: independent presentation and Three.js viewer code. Palette-index
   shading and the recovered animation formulas are retained; projection,
   rasterization, input and UI are modern.
+- `content/articles.json`: the article catalogue, used for pages, navigation,
+  the homepage, related reading and the `articles/` index. Add future articles
+  here so they are reachable from each entry point.
+- The sound, missions, combat, loader and demo-history articles have a shared
+  maintainer guide in `content/research-articles-evidence.md`.
+  `scripts/render-research-diagrams.py` regenerates their eleven SVGs using the
+  standard Python library and committed maps. `src/articles.js` supplies the
+  optional music comparison and damage calculator; audio remains on the
+  existing analysis host rather than being duplicated in this repository.
 - `public/data/`: a committed, deterministic display snapshot. Normal builds
   need **only this repository**.
 - `content/research-sources.md`: claim-to-evidence guide for maintainers.

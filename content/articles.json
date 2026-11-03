@@ -1,0 +1,76 @@
+[
+  {
+    "key": "graphics",
+    "file": "graphics-engine.md",
+    "title": "Inside Darker’s graphics engine",
+    "eyebrow": "Engine anatomy / retail 1995",
+    "description": "Model bytecode, fixed-point perspective, palette lighting and the fountain’s reflections: from the city map to the screen.",
+    "contents": "Inside the renderer",
+    "date": "2 November 2026",
+    "script": "graphics",
+    "image": "graphics/fountain-gouraud.png"
+  },
+  {
+    "key": "flight",
+    "file": "flight-model.md",
+    "title": "Inside Darker’s flight model",
+    "eyebrow": "Flight dynamics / retail 1995",
+    "description": "The Caero’s beacon-powered flight, the Skimma’s speed-dependent lift, braking and underground route guidance.",
+    "contents": "Inside the flight model",
+    "date": "2 November 2026",
+    "script": "flight",
+    "image": "flight/caero-flight.png"
+  },
+  {
+    "key": "sound",
+    "file": "sound-engine.md",
+    "title": "How Darker makes music",
+    "eyebrow": "Sound drivers / retail 1995",
+    "description": "Five musical arrangements, custom instruments, independent loops and the path from sequence commands to synthesised audio.",
+    "contents": "Inside the sound engine",
+    "date": "3 November 2026",
+    "script": "articles",
+    "image": "sound/playback.svg"
+  },
+  {
+    "key": "missions",
+    "file": "mission-engine.md",
+    "title": "Programming Darker’s missions",
+    "eyebrow": "Mission scripts / retail 1995",
+    "description": "How small programs coordinate aircraft, objectives, radio messages and blackouts, and how the city remembers what happened.",
+    "contents": "Inside a mission",
+    "date": "3 November 2026",
+    "image": "missions/record.svg"
+  },
+  {
+    "key": "combat",
+    "file": "combat-system.md",
+    "title": "Combat beneath the polygons",
+    "eyebrow": "Weapons and collisions / retail 1995",
+    "description": "Aircraft resistance and recovery, vulnerable building volumes, and the unusual rules behind Darker’s weapons.",
+    "contents": "Following an impact",
+    "date": "3 November 2026",
+    "script": "articles",
+    "image": "combat/doorway.svg"
+  },
+  {
+    "key": "loader",
+    "file": "executable-loader.md",
+    "title": "Unpacking Darker’s executable",
+    "eyebrow": "x86 and DOS / executable archaeology",
+    "description": "A five-byte interrupt handler interleaves instruction streams before decoding, expanding and relocating the game.",
+    "contents": "Through the loader",
+    "date": "3 November 2026",
+    "image": "loader/interleave.svg"
+  },
+  {
+    "key": "demos",
+    "file": "demo-history.md",
+    "title": "Darker before release",
+    "eyebrow": "Development history / surviving demos",
+    "description": "Earlier cities, flight tuning, unfinished weapons and the small programming shortcuts preserved in two demo packages.",
+    "contents": "Comparing the demos",
+    "date": "3 November 2026",
+    "image": "demos/city-growth.svg"
+  }
+]

@@ -1,0 +1,99 @@
+{
+  "date": "2026-11-03",
+  "generator": "scripts/render-research-diagrams.py",
+  "figures": [
+    {
+      "file": "images/sound/loops.svg",
+      "sha256": "b2b7a1093b14b209ef9bab2490f87b319e1d4348cc5382970ed2ffcc0db404ab",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/sound/playback.svg",
+      "sha256": "22de20b75b97ae52266920408072aa04935e464d31d53e898fe11984db0cf658",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/missions/persistence.svg",
+      "sha256": "6af7094f42c10e106c2271cd46adf12ae22f82897ec849c72dd69c52e771c2d8",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/missions/record.svg",
+      "sha256": "b05ab4835a09223add215c25bec0e1797d98b56157b6e794fe168a4047941ee6",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/combat/diffuser.svg",
+      "sha256": "bd803357083216b46f5b50a657b955c260b88b434384aaf0cf5e80ddc46856df",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/combat/doorway.svg",
+      "sha256": "7bcda18416c40b36fdf06331e77135513ca90e1631bf3141638d9883d4f0bdec",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/combat/resistance.svg",
+      "sha256": "3fe5f07f251d9eae876513548d5b59fe5d6bcd37ac10028899122380cfbae9dc",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/loader/interleave.svg",
+      "sha256": "ae7894bd7db922b67a4d849e4a275201f3528d8d08dc0f1ba957271de0867911",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/loader/output.svg",
+      "sha256": "65a1d0b9dcb8d2f2361e167c749b5283a894d20e366df6bb9a56b4ebc53cd6d2",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/demos/city-growth.svg",
+      "sha256": "54be4eeb5092980296c4bf28246b6e564db9962009e656c3bf6ce1bc87bb756d",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    },
+    {
+      "file": "images/demos/timestep.svg",
+      "sha256": "6816be1aecc0c0bb2ee5aeeeaf43bb44ccd63eae24407595db94199410704bff",
+      "kind": "explanatory SVG; generated from the script and committed map data"
+    }
+  ],
+  "reused_image": {
+    "file": "images/model-dish.webp",
+    "kind": "existing modern viewer render of 1993 Surface A city model 13",
+    "provenance": "content/data-provenance.json"
+  },
+  "audio": {
+    "source": "https://lostengines.com/darker/analysis/audio/native-loops/manifest.json",
+    "engine_commit": "ce0cb6169bb287838f318cc65de2f4cabab41a21",
+    "kind": "emulated synthesis from retail sequences",
+    "group": 6,
+    "format": "48 kHz stereo, 24-bit FLAC",
+    "configurations": {
+      "soundblaster_awe32": "--music=soundblaster_awe32",
+      "soundblaster_fm": "--music=soundblaster_fm --opl=dosbox",
+      "gravis": "--music=gravis --gus-ram=1024",
+      "roland-lapc": "--music=roland-lapc",
+      "roland-sc55": "--music=roland-sc55"
+    },
+    "source_hashes": {
+      "awe32.raw": "4e143b94f758734f594ded78f4e5115635975c16fa37fabeae0baa4938ca710e",
+      "cm32l_ctrl_1_02.rom": "08d68695e5bff6bbcbb751d6e4453db9f5ead0b5f41e86480798a04376dfe090",
+      "cm32l_pcm.rom": "0dc50190bb7ea3fb212c970346b771a511772b528801e7eda6d27efda8c40698",
+      "sc55_rom1.bin": "7e1bacd1d7c62ed66e465ba05597dcd60dfc13fc23de0287fdbce6cf906c6544",
+      "sc55_rom2.bin": "effc6132d68f7e300aaef915ccdd08aba93606c22d23e580daf9ea6617913af1",
+      "sc55_waverom1.bin": "5655509a531804f97ea2d7ef05b8fec20ebf46216b389a84c44169257a4d2007",
+      "sc55_waverom2.bin": "c655b159792d999b90df9e4fa782cf56411ba1eaa0bb3ac2bdaf09e1391006b1",
+      "sc55_waverom3.bin": "334b2d16be3c2362210fdbec1c866ad58badeb0f84fd9bf5d0ac599baf077cc2",
+      "ULTRASND/ULTRAMID.EXE": "e9f631450b9cc6954693be7c9ed1ae23b7428bb721f9c87c5c3ea320cb032b9e",
+      "ULTRASND/MIDI/ULTRAMID.INI": "e883b9cd55344eb0cadff773bc7a3a3c0334bf4b161f064e5a2b4d568b060f89"
+    },
+    "processing": "No fades, filtering, per-track normalisation or added tails. SC-55 alone uses a fixed gain of 0.5 (-6.0206 dB) to preserve peaks above float full scale without clipping; all other modes use unity gain. Continuous first-pass playback, split without resetting synthesis.",
+    "music_credit": "PC Music"
+  },
+  "evidence": "content/research-articles-evidence.md",
+  "map_inputs": {
+    "map-199538.json": "fa57e249976bd1722d7c2d46fb398d2198fa2a271a2426c9f7a3273ccd23bc29",
+    "map-68.json": "1ddb55c0968226077baaac3799722bed809e02ab798305b7e11b3d75d171d855"
+  }
+}

@@ -74,3 +74,16 @@
 .flight-switches label{justify-content:flex-start;gap:10px}
 .flight-switches input{width:auto}
 .flight-demo [role=status]{min-height:5em}
+
+/* The article catalogue also supplies the homepage and related reading. */
+.article-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px 28px}
+.article-cards .card h3{margin-top:16px}
+.article-index{padding-top:20px}
+.article-related{border-top:1px solid var(--line);margin:55px 0 0;padding:24px 0;font:14px/1.8 system-ui}
+.article-related ul{display:grid;grid-template-columns:1fr 1fr;gap:10px 25px;list-style:none;padding:0;margin:0}
+.article-related p{margin-bottom:15px}
+.story-layout + .article-related{margin:0 5vw 45px}
+.engine-demo audio{display:block;width:100%;margin:22px 0}
+[data-damage-result]{margin-top:18px}
+@media(max-width:900px){.article-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.article-cards,.article-related ul{grid-template-columns:1fr}}
